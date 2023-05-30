@@ -1,5 +1,4 @@
 import cloudscraper
-import re
 from bs4 import BeautifulSoup
 
 params = {
@@ -24,12 +23,12 @@ def get_html(url, params=None):
 
 
 def get_pages_count(html):
-    soup = BeautifulSoup(html, features='html.parser')
+    soup = BeautifulSoup(html.text, features='html.parser')
     try:
         # Находим номер последней страницы с помощью тега span
         # Пример вывода pages: <span class="styles-module-text-InivV">100</span>
         pages = soup.find('div', class_='js-pages pagination-pagination-_FSNE') \
-            .find_all('span', class_=re.compile('styles-module-text'))[-1]
+            .find_all('span', class_='styles-module-text-InivV')[-1]
         total_pages = str(pages)
         # Забираем число найдя индексы открывающего и закрывающего тега в строке
         total_pages = total_pages[total_pages.find('>') + 1:total_pages.rfind('<')]
@@ -37,23 +36,26 @@ def get_pages_count(html):
     except AttributeError:
         print('Ошибка парсера')
 
-
-#def get_page_data(html):
-url = 'https://www.avito.ru/all?p=1&q=котик'
-
+url = 'https://www.avito.ru/all?q=котик'
 html = get_html(url)
 
-soup = BeautifulSoup(html.text, features='html.parser')
-ads = soup.find('div', class_=re.compile('items-items'))
-print(ads)
+print(get_html(url))
+print(get_pages_count(html))
+
 
 '''
+def get_page_data(html):
+    soup = BeautifulSoup(html, features='html.parser')
+    ads = soup.find('div', {data - marker = 'item'})
+    return ads
+
+
 def main():
     base_url = 'https://www.avito.ru/all?'
     page_part = 'p='
     query_part = 'q='
-    query = 'Котик'
-    #query = input('Введите запрос: ')
+    #query = 'Котик'
+    query = input('Введите запрос: ')
 
     print(base_url + query_part + query)
     html = get_html(base_url + query_part + query)
