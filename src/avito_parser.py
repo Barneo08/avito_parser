@@ -156,7 +156,7 @@ class AvitoParser:
         """Закрывает вкладку №2 и возвращается на №1"""
         self.driver.close()
         #self.driver.switch_to.window(self.driver.window_handles[0])
-
+        time.sleep(randint(5, 10))
         print(data)
         return data
 
@@ -168,7 +168,6 @@ class AvitoParser:
         data_list = []
         try:
             for index, url in enumerate(self.parse_urls_list()):
-                time.sleep(randint(5, 10))
                 data_list.append(self.parse_ads_page(url))
                 # print(self.parse_ads_page(url))
                 """---без прокси часто вылетает 429, поэтому парсим только первые ads_count записей---"""
