@@ -3,3 +3,4 @@ env*
 venv*
 *.xlsx
 .idea
+*.db
