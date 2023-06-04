@@ -67,7 +67,7 @@ class AvitoParser:
             url = ad.find_element(*LocatorAvito.URL).get_attribute("href")
             self.page_url_list.append(url)
 
-    def parse_urls_list(self):
+    def __parse_urls_list(self):
         try:
             self.__set_up()
             self.__get_url()
@@ -167,7 +167,7 @@ class AvitoParser:
     def parse_pages_from_url_list(self):
         data_list = []
         try:
-            for index, url in enumerate(self.parse_urls_list()):
+            for index, url in enumerate(self.__parse_urls_list()):
                 data_list.append(self.parse_ads_page(url))
                 # print(self.parse_ads_page(url))
                 """---без прокси часто вылетает 429, поэтому парсим только первые ads_count записей---"""
